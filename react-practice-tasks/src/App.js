@@ -58,6 +58,8 @@ class App extends Component {
 
   }
 
+
+  // Inline style editting 
   render() {
     const style = {
       backgoundColor: "blue",
@@ -68,20 +70,12 @@ class App extends Component {
       color: "green"
     };
 
+    //A different way of adding conditional dynamic content better practice Under te Render before return
 
-    return (
-      <div className="App" >
-        <h1>Hi,there</h1>
-        {/* I have been creating another element and a new css class to style the p element and added in the p */}
-        <p className="p"> Task Nr.1</p>
-        <button 
-        style={style}
-        onClick = {this.togglePersonsHandler}>Switch Name</button>
+    let persons = null;
 
-        { 
-        
-        this.state.showPersons === true ? 
-
+    if (this.state.showPersons) {
+      persons = (
         <div>
 
           <Person
@@ -99,14 +93,26 @@ class App extends Component {
             name={this.state.persons[2].name}
             age={this.state.persons[2].age} />  
 
-        </div> :null
+        </div>
+      )
+    }
 
-        }
 
-
-           <VerticalSpace height={30} /> 
+    return (
+      <div className="App" >
+        <h1>Hi,there</h1>
+        {/* I have been creating another element and a new css class to style the p element and added in the p */}
+        <p className="p"> Task Nr.1</p>
+        <button 
+        style={style}
+        onClick = {this.togglePersonsHandler}>Switch Name</button>
+        {persons}
+        
+       <VerticalSpace height={30} /> 
 
            <p className="p">Task Nr.2</p>
+      {/* Adding conditional content in a different way Avoid this practise */}
+
 
            <button 
             style={style}
@@ -116,7 +122,6 @@ class App extends Component {
             this.state.showInputs === true ?   
 
         <div>
-
            <UserInput 
            changed={this.usernameChangeHandler}
            currentName={this.state.username}
@@ -127,16 +132,13 @@ class App extends Component {
            <UserOutput userName={this.state.username}/>
            <UserOutput userName={this.state.username}/>
            <UserOutput userName='Max'/>
-
-
-        </div> :null
-
-          }
+         </div> :null
+        }
 
 
        </div>
     );
-    // return React.createElement("div", {className: 'App'}, React.createElement("h1", null, "Does it work?"));
+    
   }
 }
 
@@ -144,10 +146,4 @@ export default App;
 
 
 
-    /* //     <header className="App-header">
-    //       <img src={logo} className="App-logo" alt="logo" />
-    //       <h1 className="App-title">Welcome to React</h1>
-    //     </header>
-    //     <p className="App-intro">
-    //       To get started, edit <code>src/App.js</code> and save to reload.
-    //     </p> */
+  
