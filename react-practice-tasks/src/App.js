@@ -34,7 +34,7 @@ class App extends Component {
     showPersons: false
   }
 
-  
+
 // This is comment out cause is not used on the Next task
   // switchNameHandler = (newName) => {
   //   console.log("was clicked");
@@ -55,9 +55,12 @@ class App extends Component {
   }
 
   // Here we remove one Person from the list by using the splice method
-// it removes one person with the onClick methos
+// it removes one person with the onClick method
 deletePersonHandler = (personIndex) => {
-  const persons = this.state.persons;
+  // Adding the slice() method that copies the Array and it stores
+  //  it in this function and then we remove BETTER PRACTICE
+  const persons = this.state.persons.slice();
+  // const persons = [...this.state.persons]; This way E6 works as well with spread operator [...]
   persons.splice(personIndex, 1);
   this.setState({persons: persons})
 
