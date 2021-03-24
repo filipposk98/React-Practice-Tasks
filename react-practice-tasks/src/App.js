@@ -19,24 +19,31 @@ class App extends Component {
 
   // }
 
+
+
+  // The Array below is the Data the amount of persons Info that will show up on the 
+  // screen after the button is clicked
   state =  {
     persons: [
       {name: 'Max', age: 28},
       {name: 'Manu', age: 23},
-      {name: 'Bill', age: 53}
+      {name: 'Bill', age: 53},
+      {name: 'Jill', age: 893}
     ],
     otherState: "new value",
     showPersons: false
   }
 
-  switchNameHandler = (newName) => {
-    console.log("was clicked");
-    this.setState({persons: [
-      {name: newName, age: 28},
-      {name: 'Manu', age: 44},
-      {name: 'Billiling', age: 27}
-    ] })
-  }
+  
+// This is comment out cause is not used on the Next task
+  // switchNameHandler = (newName) => {
+  //   console.log("was clicked");
+  //   this.setState({persons: [
+  //     {name: newName, age: 28},
+  //     {name: 'Manu', age: 44},
+  //     {name: 'Billiling', age: 27}
+  //   ] })
+  // }
 
   nameChangeHandler = (event) => {
     this.setState({persons: [
@@ -46,6 +53,15 @@ class App extends Component {
     ] })
 
   }
+
+  // Here we remove one Person from the list by using the splice method
+// it removes one person with the onClick methos
+deletePersonHandler = (personIndex) => {
+  const persons = this.state.persons;
+  persons.splice(personIndex, 1);
+  this.setState({persons: persons})
+
+}
 
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
@@ -70,32 +86,49 @@ class App extends Component {
       color: "green"
     };
 
-    //A different way of adding conditional dynamic content better practice Under te Render before return
 
     let persons = null;
 
     if (this.state.showPersons) {
       persons = (
         <div>
+          {this.state.persons.map((person, index) => {
+            return <Person
+              click={() => this.deletePersonHandler(index)}
+              name={person.name}
+              age={person.age}/>
+          })}
+        </div> 
+        )
+      }
 
-          <Person
-            name={this.state.persons[0].name}
-            age={this.state.persons[0].age} >
-          </Person>
-          <Person
-            name={this.state.persons[1].name}
-            age={this.state.persons[1].age}
-            click = {this.switchNameHandler.bind(this, "maxim")}
-            changed={this.nameChangeHandler}> My hobbies: Football 
-          </Person>
-        {/* Can write the same also with out the closure just by adding a / in to the same bracket */}
-          <Person
-            name={this.state.persons[2].name}
-            age={this.state.persons[2].age} />  
+    //A different way of adding conditional dynamic content
+    //  better practice Under te Render before return
 
-        </div>
-      )
-    }
+    // let persons = null;
+
+    // if (this.state.showPersons) {
+    //   persons = (
+    //     <div>
+
+    //       <Person
+    //         name={this.state.persons[0].name}
+    //         age={this.state.persons[0].age} >
+    //       </Person>
+    //       <Person
+    //         name={this.state.persons[1].name}
+    //         age={this.state.persons[1].age}
+    //         click = {this.switchNameHandler.bind(this, "maxim")}
+    //         changed={this.nameChangeHandler}> My hobbies: Football 
+    //       </Person>
+    //     {/* Can write the same also with out the closure just by adding a / in to the same bracket */}
+    //       <Person
+    //         name={this.state.persons[2].name}
+    //         age={this.state.persons[2].age} />  
+
+    //     </div>
+    //   )
+    // }
 
 
     return (
